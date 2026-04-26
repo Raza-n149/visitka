@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Сайт-визитка | Ученик 9 класса</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f5f7fc 0%, #eef2f8 100%);
+            color: #1e2a3e;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        /* основной контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* карточка визитки */
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(0px);
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        /* верхняя цветная секция */
+        .hero {
+            background: linear-gradient(135deg, #1e4b6e 0%, #2c3e66 100%);
+            padding: 2.5rem 2rem 3rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background: #ffffff;
+            border-radius: 50%;
+            margin: 0 auto 1.2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px -8px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .avatar span {
+            font-size: 5rem;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+
+        /* основное содержание */
+        .content {
+            padding: 2rem 2rem 2.2rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e4b6e;
+            border-left: 5px solid #2c7da0;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-text {
+            background: #f8fafd;
+            padding: 1.2rem 1.5rem;
+            border-radius: 28px;
+            font-size: 1rem;
+            color: #1e2a3a;
+            line-height: 1.6;
+            box-shadow: inset 0 1px 2px #00000008, 0 2px 4px #00000005;
+        }
+
+        /* интересные факты / навыки */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-badge {
+            background: white;
+            border: 1px solid #cbdbe2;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1e4b6e;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: all 0.2s;
+        }
+
+        .skill-badge:hover {
+            background: #eef2ff;
+            border-color: #2c7da0;
+            transform: translateY(-2px);
+        }
+
+        /* строка контактов */
+        .contacts {
+            background: #eef2f6;
+            border-radius: 28px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            color: #1f3b4c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .contact-item:hover {
+            color: #2c7da0;
+            transform: translateX(3px);
+        }
+
+        .contact-icon {
+            font-size: 1.4rem;
+        }
+
+        /* достижения / хобби (три колонки) */
+        .hobby-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .hobby-card {
+            flex: 1 1 160px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1rem 0.8rem;
+            text-align: center;
+            box-shadow: 0 6px 12px -8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            border-color: #b9d0e3;
+            box-shadow: 0 15px 22px -12px rgba(0, 0, 0, 0.12);
+        }
+
+        .hobby-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .hobby-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: #1e4b6e;
+        }
+
+        /* кнопка цитата */
+        .quote-block {
+            background: linear-gradient(115deg, #fff9ef 0%, #fff5e6 100%);
+            border-radius: 28px;
+            padding: 1.3rem 1.8rem;
+            text-align: center;
+            font-style: italic;
+            border-left: 6px solid #e9b35f;
+            margin-top: 0.5rem;
+        }
+
+        .quote-text {
+            font-size: 1rem;
+            color: #3b2a1f;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0.5rem 0.5rem;
+            font-size: 0.8rem;
+            color: #5b6f82;
+        }
+
+        /* адаптивность для телефонов */
+        @media (max-width: 650px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .content {
+                padding: 1.5rem;
+            }
+            .contacts {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .avatar span {
+                font-size: 3.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <!-- Верхняя часть с аватаром и именем -->
+        <div class="hero">
+            <div class="avatar">
+                <span>📚</span>
+            </div>
+            <h1>Матвей Соколов</h1>
+            <div class="tagline">Ученик 9 «А» класса | Будущий IT-специалист</div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="content">
+            <!-- О себе -->
+            <div class="section">
+                <div class="section-title">Немного о себе</div>
+                <div class="about-text">
+                    Привет! Меня зовут Матвей, мне 15 лет, я учусь в 9 классе гимназии №7. 
+                    С детства увлекаюсь компьютерами и технологиями. В этом году я начал серьёзно изучать 
+                    веб-разработку: HTML, CSS и немного JavaScript. Моя цель — создать свой собственный 
+                    проект, который будет полезен другим школьникам. Люблю решать логические задачи, 
+                    участвую в олимпиадах по информатике и математике.
+                </div>
+            </div>
+
+            <!-- Навыки / что умею -->
+            <div class="section">
+                <div class="section-title">Мои навыки</div>
+                <div class="skills-grid">
+                    <span class="skill-badge">⚡ HTML5</span>
+                    <span class="skill-badge">🎨 CSS3 / Flexbox / Grid</span>
+                    <span class="skill-badge">📱 Адаптивная вёрстка</span>
+                    <span class="skill-badge">🐍 Python (начальный уровень)</span>
+                    <span class="skill-badge">🗄️ Работа с VS Code</span>
+                    <span class="skill-badge">🤝 Командная работа</span>
+                </div>
+            </div>
+
+            <!-- Хобби и увлечения -->
+            <div class="section">
+                <div class="section-title">Чем увлекаюсь</div>
+                <div class="hobby-cards">
+                    <div class="hobby-card">
+                        <div class="hobby-emoji">💻</div>
+                        <div class="hobby-title">Веб-дизайн</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Создаю макеты</div>
+                    </div>
+                    <div class="hobby-card">
+                        <div class="hobby-emoji">♟️</div>
+                        <div class="hobby-title">Шахматы</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">2 разряд</div>
+                    </div>
+                    <div class="hobby-card">
+                        <div class="hobby-emoji">📖</div>
+                        <div class="hobby-title">Научная фантастика</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Брэдбери, Лем</div>
+                    </div>
+                    <div class="hobby-card">
+                        <div class="hobby-emoji">🏀</div>
+                        <div class="hobby-title">Спорт</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Волейбол/баскетбол</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Достижения (успехи в учёбе / проектах) -->
+            <div class="section">
+                <div class="section-title">Достижения</div>
+                <div class="skills-grid" style="margin-bottom: 0.5rem;">
+                    <span class="skill-badge">🏆 Победитель школьной олимпиады по информатике (2025)</span>
+                    <span class="skill-badge">🥈 Призёр городского хакатона по вёрстке</span>
+                    <span class="skill-badge">📁 Разработал сайт для школьной газеты</span>
+                    <span class="skill-badge">⭐ Отличник по математике и физике</span>
+                </div>
+            </div>
+
+            <!-- Контакты + соцсети -->
+            <div class="section">
+                <div class="section-title">Контакты</div>
+                <div class="contacts">
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">📧</span> matvey.school@example.ru
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">📱</span> +7 (999) 123-45-67
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">💬</span> @matvey_dev
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">🐙</span> GitHub / matvey-codes
+                    </a>
+                </div>
+            </div>
+
+            <!-- Вдохновляющая цитата -->
+            <div class="quote-block">
+                <div class="quote-text">
+                    «Программирование — это не просто код, это способ думать и создавать новое. 
+                    Даже в 9 классе можно сделать настоящий сайт!»
+                </div>
+                <div style="margin-top: 10px; font-size: 0.8rem; font-style: normal; font-weight: 500;">— Матвей</div>
+            </div>
+        </div>
+        <footer>
+            © 2026 Сайт-визитка ученика 9 класса | Создано в рамках проекта по информатике
+        </footer>
+    </div>
+</div>
+</body>
+</html>
