@@ -55,11 +55,22 @@
             justify-content: center;
             box-shadow: 0 15px 30px -8px rgba(0, 0, 0, 0.3);
             border: 3px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;        /* чтобы фото идеально вписывалось в круг */
         }
 
+        /* Стиль для фотографии внутри аватара */
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;        /* заполняет круг, сохраняя пропорции */
+            display: block;
+        }
+
+        /* Если по какой-то причине фото не загрузится — показываем фон с эмодзи */
         .avatar span {
             font-size: 5rem;
             font-weight: 500;
+            display: none;            /* скрыт по умолчанию, показываем только если нет фото */
         }
 
         .hero h1 {
@@ -203,7 +214,7 @@
             color: #1e4b6e;
         }
 
-        /* кнопка цитата */
+        /* вдохновляющая цитата */
         .quote-block {
             background: linear-gradient(115deg, #fff9ef 0%, #fff5e6 100%);
             border-radius: 28px;
@@ -243,8 +254,9 @@
                 width: 100px;
                 height: 100px;
             }
-            .avatar span {
-                font-size: 3.8rem;
+            .avatar-img {
+                width: 100%;
+                height: 100%;
             }
         }
     </style>
@@ -252,13 +264,16 @@
 <body>
 <div class="container">
     <div class="card">
-        <!-- Верхняя часть с аватаром и именем -->
+        <!-- Верхняя часть с аватаром (фото) и именем -->
         <div class="hero">
             <div class="avatar">
+                <!-- Реальное фото: photo.jpg. При необходимости замените путь на свой -->
+                <img class="avatar-img" src="photo.jpg" alt="Фото Намток Анзор">
+                <!-- Резервный элемент, который можно показать, если картинка недоступна (скрыт по умолчанию) -->
                 <span>📚</span>
             </div>
             <h1>Намток Анзор</h1>
-            <div class="tagline">Ученик 9 класса </div>
+            <div class="tagline">Ученик 9 класса</div>
         </div>
 
         <!-- Основной контент -->
@@ -277,7 +292,8 @@
                 <div class="section-title">Мои навыки</div>
                 <div class="skills-grid">
                     <span class="skill-badge">⚡ HTML</span>
-                    <span class="skill-badge">🎨 CSS </span>
+                    <span class="skill-badge">🎨 CSS</span>
+                    <span class="skill-badge">📱 Адаптивная вёрстка</span>
                 </div>
             </div>
 
@@ -293,10 +309,12 @@
                     <div class="hobby-card">
                         <div class="hobby-emoji">♟️</div>
                         <div class="hobby-title">Шахматы</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Стратегия & логика</div>
                     </div>
                     <div class="hobby-card">
                         <div class="hobby-emoji">📖</div>
-                        <div class="hobby-title">Книги </div>
+                        <div class="hobby-title">Книги</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Фантастика, IT</div>
                     </div>
                     <div class="hobby-card">
                         <div class="hobby-emoji">🏀</div>
@@ -304,8 +322,9 @@
                         <div style="font-size: 0.75rem; color:#3f5e7c;">Баскетбол</div>
                     </div>
                     <div class="hobby-card">
-                        <div class="hobby-emoji"></div>
+                        <div class="hobby-emoji">💃</div>
                         <div class="hobby-title">Танцы</div>
+                        <div style="font-size: 0.75rem; color:#3f5e7c;">Адыгейские</div>
                     </div>
                 </div>
             </div>
@@ -317,6 +336,12 @@
                     <a href="#" class="contact-item">
                         <span class="contact-icon">📱</span> +7 (988) 477-06-65
                     </a>
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">📧</span> anzor@example.com
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span class="contact-icon">💬</span> Telegram
+                    </a>
                 </div>
             </div>
 
@@ -326,7 +351,7 @@
                     «Программирование — это не просто код, это способ думать и создавать новое. 
                     Даже в 9 классе можно сделать настоящий сайт!»
                 </div>
-                <div style="margin-top: 10px; font-size: 0.8rem; font-style: normal; font-weight: 500;">— Анзор </div>
+                <div style="margin-top: 10px; font-size: 0.8rem; font-style: normal; font-weight: 500;">— Анзор</div>
             </div>
         </div>
         <footer>
@@ -334,5 +359,40 @@
         </footer>
     </div>
 </div>
+
+<!-- Простой скрипт для обработки ошибки загрузки фото: если фото отсутствует, показываем эмодзи вместо битого изображения -->
+<script>
+    (function() {
+        const avatarImg = document.querySelector('.avatar-img');
+        const avatarSpan = document.querySelector('.avatar span');
+        if (avatarImg) {
+            avatarImg.onerror = function() {
+                // Скрываем сломанное изображение
+                avatarImg.style.display = 'none';
+                // Показываем запасной вариант с эмодзи (книги)
+                if (avatarSpan) {
+                    avatarSpan.style.display = 'flex';
+                    avatarSpan.style.alignItems = 'center';
+                    avatarSpan.style.justifyContent = 'center';
+                    avatarSpan.style.width = '100%';
+                    avatarSpan.style.height = '100%';
+                    avatarSpan.style.fontSize = '4rem';
+                }
+                // Опционально: добавим фон для эмодзи, чтобы было аккуратно
+                const avatarDiv = document.querySelector('.avatar');
+                if (avatarDiv) {
+                    avatarDiv.style.backgroundColor = '#ffffff';
+                }
+            };
+            // Если фото загрузилось успешно, скрываем резервный span (на всякий случай)
+            avatarImg.onload = function() {
+                if (avatarSpan) {
+                    avatarSpan.style.display = 'none';
+                }
+            };
+        }
+    })();
+</script>
 </body>
 </html>
+```
